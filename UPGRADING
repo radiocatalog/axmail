@@ -1,0 +1,6 @@
+If you are upgrading axmail from ver 1.0.1, all you really need to do
+is copy the binary over the existing one.
+
+If you are upgrading axMail from any version equal to or earlier than 1.0.0
+back up your /etc/ax25/axmail.conf file and do a full install.
+

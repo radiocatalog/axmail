@@ -1,0 +1,274 @@
+axMail - an SMTP mailbox for the various linux node frontends.
+
+PREFACE:
+
+First off, sincere thanks to those who have written to tell me that
+they use axMail, like what I've done to axMail, and for the 
+enthusiasm shown via words and/or code contributions for the program
+in hopes of keeping packet radio networks around the world alive!
+
+INTRO:
+
+Greetings and thanks for taking a look at the program. Below I've posted
+a kind of history of the program to the best of my knowledge taking text
+from existing files. Rather than trying to reinvent the wheel and after
+seeing this program before on Labrat's radio.linux.org.au site, I decided
+to try and give some life into it... partially with the assistance of Phil 
+N1XTB nudging me pretty consistantly for many months in helping him get an 
+SMTP agent in his linux based packet node server without having to install 
+an xNOS overhead node ontop it. :) 
+
+Please do take a moment and read the text based files included with this 
+package so you're a bit familiar with what it does so that you don't get a 
+false perception as to what it can and/or can not do. axMail just might 
+not be what you're looking for or expecting for a node based plugin
+
+HISTORY:
+
+axmail v1.0.4
+  Updated 23 May, 2008 by Brian Rogers (N1URO) <brian@support.uroweb.net>
+ 
+Changes:
+- setpwnam.c
+  Changed the way SIGPIPE was handled. Instead of being ignored, it will
+  now read a SIGQUIT properly if a QUIT is signaled to axmail either via
+  a shell prompt, or a node frontend. I've been noticing especially on
+  some timeouts that temp files don't flush as they should and the
+  user's directory can start to fill up.
+
+axMail v1.0.3
+  Updated 2 December, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
+
+Changes:
+- mailcmd.c
+  Reset the way I wanted to handle the user input routine for sending faxes.
+  Commented out some more unneeded/unused code in the do_fax routine... will
+  clean it up in next release or so.
+
+- mailcmd.c
+  cleaned up a bug I introduced in the never released 1.0.2 where the
+  X-Mailer was duping itself after each line of the body of a message.
+
+- sfax.hlp
+  Reworded the SFax help file to help show some examples of how to format
+  the header. 
+
+axMail v1.0.2
+  Updated 24 November, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
+
+Changes:
+- mailcmd.c
+  Cleaned up some of the code in SFax. Also made some cosmetic changes.
+
+axMail v1.0.1
+  Updated 31 October, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
+
+Changes:
+- mailcmd.c
+  Added a new routine to allow users to send faxes. This is defined by the
+  command "SF" for Send Fax. The routine was taken from the "S"end function
+  however since it's a one-way transmission, there is no reply available
+  nor is there an option for users to fax to any fax service as some I know
+  are pay services.
+
+- config.h
+  added definitions for faxgate in axmail.conf
+
+- config.c
+  added routine to allow for faxgate as a variable and be called from 
+  mailcmd.c
+
+- defines.h
+  version upgraded from v1.0.0 (unreleased - test version) to
+  v1.0.1
+
+- etc/axmail.conf
+  Added new line called "FaxGate" with an example of how to properly
+  configure this line.
+
+- etc/help/sfax.hlp
+  Added new file "sfax.hlp" which is an online help file for the SFax
+  command.
+
+axMail v0.0.9
+  Updated 26 September, 2006 by Brian Rogers (N1URO) <n1uro@n1uro.com>
+
+Changes:
+- mailcmd.c
+  Added a new routine that prompts the sender whether or not the message
+  is of an emergency/high priority mail message. If it's emergency message
+  then the headers are appended with an X-code flagged in such a manner
+  that Eudora and Outlook will display the received mail with a red flag
+  of sorts. The idea of such came to me in thinking of "what can I do
+  to help improve means of emergency communications using TCP/IP, Linux,
+  and packet radio?" Having the ability to "red flag" an SMTP message
+  I don't believe has yet to be available in any packet messaging
+  system... axMail I hope is the first.
+
+  If a user just hits enter, or selects "no" then the mail message
+  is sent under normal send routines.
+
+  found a minor bug in my routine where if an end user answered
+  "yes" in wanting to send an emergency/high priority message the system
+  ignored the request and sent it as 'normal' delivery. Made a minor
+  change to bullet-proof the responce.
+
+  Added online help text if user is unsure about sending a message
+  flagged urgent or normal. This text is available when the user is
+  prompted for priority selection by hitting "?" at the prompt.
+
+- defines.h
+  Version updated from v0.0.8 to v0.0.9
+
+axMail v0.0.8
+
+  Updated 2006 by Brian Rogers (N1URO) <n1uro@n1uro.com>
+ 
+Changes:
+ - mailcmd.c
+   Rewrote and incorporated code provided by IW3IJQ how axMail inserts
+   it's version number in the X-Mailer: string.
+
+ - mailcmd.c   
+   Added an X-Origin: string to show those peeking at mail headers
+   just how the message was possibly sent... by AMATEUR RADIO!
+   
+ - axmail.conf
+   Added config option in "AllowMail" for axhome, a rewrite of code
+   submitted by Stefano IW3IJQ. While I stripped out home directory
+   structures similar to that of qmail or axspawn, Stefano convinced
+   me that it may be easier to manage home directories for axMail users
+   who don't have shell access to branch out within a preset directory.
+
+ - defines.h
+   Updated version number from 0.0.7 to 0.0.8
+
+ - axmail.c and config.c
+   Rewrote and incorporated code to allow for the routines to use
+   what Stefano IW3IJQ originally labled "newuhome" to use "axhome".
+   While I was at it, I rewrote and shortened the error text pushed
+   to a user who doesn't have permission to use such a directory.
+
+ * Note: When I write error texts and menus, I try to write them for
+   users on a multi-hop 1200 baud path thus the shorter the better as
+   long as context isn't lost and for long distance hops where full
+   paclen may cause retries (worse yet timeouts!)
+
+axMail v0.0.7
+  
+  Updated 2005 by Brian Rogers (N1URO) <n1uro@n1uro.com>
+
+Changes:
+ - cosmetics
+   My usual "I like seeing this this way" type cosmetics... too many
+   to mention!
+
+ - adduser.c
+   changed the hard coding of user 'home' directories so that instead
+   of them going into a period delimited sort, just dump em all into
+   /home/<user> which seems to be "the norm" on most systems I've had
+   to assist with.
+
+ - adduser.c
+   fixed a bug where creating a user was actually causing the program to
+   segfault upon exit the first time a user went into the mailbox! The
+   node frontends hid this segfault as the program still flushed itself
+   from ram but I spotted it when running it at a command prompt. The
+   segfault came when axMail attempted to write mail back to the user's
+   system mailbox and it didn't exist. How I fixed this is listed next.
+   This may just be a new bug that appeared with the upgrading of libs,
+   this I'm unsure of and since I have no desire to go backwards I have
+   decided to actually make a minor routine...
+
+ - welcome.txt
+   New users are now sent a "welcome" message that the sysop can easily
+   customize to their desires. It's located at /etc/ax25/welcome.txt.
+   I figured that since axMail was segfaulting because such a file did
+   not exist, I might as well make use of this need by having the program
+   send the user a greeting.   
+
+ - defines.h
+   Changed paths to be more in line with the more modern type configs
+   as a default. Paths can still be defined by the sysop prior to 
+   compiling axMail. 
+
+ - Makefile
+   I changed the default of make install to include all of the subroutines
+   within the Makefile yet leaving such things as "make installbin" 
+   available as runtime options if just a binary refresh creation is 
+   desired. 
+
+ - other
+   I'm sure I missed a note or two *shrug*
+
+axMail v0.0.6
+
+  Tweeks made by Marius Petrescu (?) I know there was a ver 0.0.6 which
+  I at one time had but lost and can't seem to find it. My (n1uro) 
+  changes may have alread been incorporated.
+
+axMail v0.0.5
+
+  True mailbox functionalities created by Marius Petrescu.
+  Added Mailbox save routines (compatible with the command line
+  mail agent, including ~/mbox file)
+
+axMail v0.0.4
+
+  Copyright (c) 1996 Heikki Hannikainen (OH7LZB) <hessu@pspt.fi>
+  
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+  Don't give this one to anyone yet... it is NOT ready for distribution!
+
+  This is a simple mail user agent intended to provide the
+mail functions in xNOS in a Linux ax.25 environment. If required,
+it creates a normal user account for each new user (code mostly taken
+from axspawn by Joerg Reuter (DL1BKE)), so that they can receive mail
+on the system. axMail uses sendmail (or similar) to deliver mail, and
+reads mail from each user's system mailbox (/var/spool/mail/username).
+It does not provide any means of transferring mail between hosts.
+
+  axMail provides a simple, low-overhead user interface, much similar
+to /bin/mail, xNOS and the packet BBS systems. It's useful for providing 
+good SMTP mail services for "dumb" ax.25 users over slow radio channels.
+
+  axMail is intended to be called from node. It takes one command
+line argument of the user's callsign (with or without SSID). It must
+be run as root, but it setuid()'s itself to the respective user's
+privileges as soon as possible. It might run from ax25d as well.
+It can also be executed from a shell with user privileges.
+
+  Some code (command parser, configuration file stuff) and the internal 
+architecture was taken from the LinuxNode frontend by Tomi Manninen 
+(OH2BNS). Thanks!
+
+INSTALLATION:
+
+	See the file: INSTALL
+
+TODO:
+  I know I can clean up the code a LOT more, will do so for a maintenance
+  release which will most likely be v1.0.2.
+
+	Suggestions?
+
+-- 
+Heikki Hannikainen <hessu@pspt.fi> <oh7lzb@zone.oh7rba.ampr.org>
+http://zone.pspt.fi/~oh7lzb/
+
+Brian Rogers <n1uro@n1uro.com> [n1uro@n1uro.#wma.ma.usa.noam]
+ftp://ftp.uroweb.net/pub/ax25/

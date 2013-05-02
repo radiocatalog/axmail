@@ -1,0 +1,7 @@
+Subject: Welcome to axMail v0.0.9
+
+Welcome to axmail! Your email address
+is listed above the prompt. For further
+assistance, try "?" or email root.
+
+73!

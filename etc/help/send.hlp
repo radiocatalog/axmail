@@ -1,0 +1,7 @@
+USAGE
+        send [<mail recipient>]
+
+DESCRIPTION
+        This command sends message. If no mail recipient is specified,
+        then you will be asked.
+
