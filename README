@@ -25,6 +25,34 @@ not be what you're looking for or expecting for a node based plugin
 
 HISTORY:
 
+axmail v2.0
+  Updated 8 July, 2013 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- defines.h
+  Updated version number to reflect version release 2.0. Version 1.0.5
+  was simply a maintenance test package to try and reincorporate what
+  I had done up to version 1.0.6 which I believe was one of my last
+  releases up to 2009. Since I've done all that I can recall at this
+  point and time, I decided to match URONode's release numerics with
+  a 2.0 release version.
+
+axmail v1.0.5
+  Updated 5 July, 2013 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- defines.h
+  Updated email listings to reflect the most current ones I could find
+  including my own. Also added 2013 to the years worked on axMail by
+  me.
+
+- quit.c
+  Forced ALL mail, read or otherwise when user quits to save to the
+  user's system mailbox. This is for reverse compatability with those
+  who may also run a web-based email service on the internet such as
+  NeoMail, EMUMail, etc. Prior, the system was supposed to separate
+  any read mail (and all accompanying mail in that session) to the
+  axmail ~/mbox file. We don't want this for the specific reason of
+  "reverse email client" compatability.
+
 axmail v1.0.4
   Updated 23 May, 2008 by Brian Rogers (N1URO) <brian@support.uroweb.net>
  
@@ -270,5 +298,5 @@ TODO:
 Heikki Hannikainen <hessu@pspt.fi> <oh7lzb@zone.oh7rba.ampr.org>
 http://zone.pspt.fi/~oh7lzb/
 
-Brian Rogers <n1uro@n1uro.com> [n1uro@n1uro.#wma.ma.usa.noam]
-ftp://ftp.uroweb.net/pub/ax25/
+Brian Rogers <n1uro@n1uro.net> [n1uro@n1uro.#cct.ct.usa.noam]
+ftp://ftp.n1uro.net/packet

@@ -2,7 +2,7 @@ all: axmail
 
 CC = gcc
 LD = gcc
-CFLAGS = -Wall -static -Wstrict-prototypes -g -I../lib
+CFLAGS = -static -Wstrict-prototypes -g -I../lib
 LDFLAGS = -lcrypt
 MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o axmail.o quit.o
 

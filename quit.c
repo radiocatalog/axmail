@@ -137,7 +137,7 @@ int save_mbox(void)
 		status = NULL;
 	    }
 	    else if (dot->m_flag & MREAD) {
-		dest = ub;
+		dest = mb;
 		status = "RO";
 	    }
 	    else if (dot->m_flag & MNEW) {
