@@ -1,4 +1,3 @@
-
 /* axmail.c - The command parser and main function */
 
 #include <stdio.h>
@@ -233,7 +232,8 @@ int init_user(char *call)
 			}
 		}
 
-		if ( (setgid(pw->pw_gid) == -1) || (setuid(pw->pw_uid) == -1) )
+/* code supplied by Jaroslav Skarvada */
+		if ( (setgroups(0, NULL) == -1) || (setgid(pw->pw_gid) == -1) || (setuid(pw->pw_uid) == -1) )
 			panic("init_user: Argh, cannot setuid() or setgid() to %i.%i", pw->pw_uid, pw->pw_gid);
 	}
 	

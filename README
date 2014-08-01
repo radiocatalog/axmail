@@ -25,6 +25,15 @@ not be what you're looking for or expecting for a node based plugin
 
 HISTORY:
 
+axmail v2.1
+ Updated 31 July, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- axmail.c
+  Code provided by Jaroslov OK2JRQ fixes a potential security hole in
+  the system privilege matching.
+- global
+  axMail is now under review for considerations as standard packaging in
+  RedHat's fedora project. It appears it's going to be added as a package.
 axmail v2.0
   Updated 8 July, 2013 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:

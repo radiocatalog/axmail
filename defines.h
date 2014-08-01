@@ -3,8 +3,8 @@
   *	defines.h - Compile-time configuration
   */
 
-#define VERSION "axMail-Fax v2.0"
-#define COPYRIGHT "(c) 1996, 1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005, 2006, 2013 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
+#define VERSION "axMail-Fax v2.1"
+#define COPYRIGHT "(c) 1996, 1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005, 2006, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
 #define PROMPT "=> "
 
 #define CONF_AXMAIL_FILE "/etc/ax25/axmail.conf"
