@@ -3,22 +3,22 @@
   *	defines.h - Compile-time configuration
   */
 
-#define VERSION "axMail-Fax v2.1"
-#define COPYRIGHT "(c) 1996, 1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005, 2006, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
+#define VERSION "axMail-Fax v2.3"
+#define COPYRIGHT "(c) 1996, 1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005, 2006, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
 #define PROMPT "=> "
 
-#define CONF_AXMAIL_FILE "/etc/ax25/axmail.conf"
-#define CONF_AXMAIL_PROF_FILE "/etc/ax25/ax25.profile"
+#define CONF_AXMAIL_FILE "/usr/local/etc/ax25/axmail.conf"
+#define CONF_AXMAIL_PROF_FILE "/usr/local/etc/ax25/ax25.profile"
 #define CONF_AXMAIL_USER_FILE ".axmailrc"
-#define DATA_AXMAIL_HELP_DIR "/var/ax25/axmail/help/"
-#define DATA_AXMAIL_MAIL_DIR "/var/spool/mail/"
+#define DATA_AXMAIL_HELP_DIR "/usr/local/var/ax25/axmail/help/"
+#define DATA_AXMAIL_MAIL_DIR "/usr/local/var/spool/mail/"
 #define LOCK_AXMAIL_FILE "/var/lock/axmail"
 #define BIN_AXMAIL_SENDMAIL "/usr/sbin/sendmail"
 
 #define USERPROFILE ".profile"
 #define PASSWDFILE "/etc/passwd"
 
-#define WELCOME "/etc/ax25/welcome.txt"
+#define WELCOME "/usr/local/etc/ax25/welcome.txt"
 
 #define PATHSIZE 1024
 #define LINESIZE 1024	/* Maximum length of a line in a message */

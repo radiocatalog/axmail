@@ -151,11 +151,9 @@ void syserr(const char *fmt, ...)
 	vprintf(fmt, args);
 	va_end(args);
 	
-/*	if (e <= sys_nerr) */
-	if (e <= strerror)
-/*		printf(": %s\n", strerror[e]); */
-		printf(": %s\n", strerror(errno));
-	else
-		printf(": unknown system error %d\n", e);
+/*	routine changed by VE3TOK	*/
+	printf("Error number: %d\n", e);
+	perror("The following error occured: ");
+
 }
 

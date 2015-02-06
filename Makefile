@@ -12,16 +12,16 @@ MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o ax
 install: installbin installconf installhelp
 
 installbin: all
-	install -m 0755 -s -o root -g root axmail	 /usr/sbin
+	install -m 0755 -s -o root -g root axmail	 /usr/local/sbin
 
 installconf:
-	install -m 755    -o root -g root -d		  /etc/ax25
-	install -m 644    -o root -g root etc/axmail.conf /etc/ax25
-	install -m 644    -o root -g root etc/welcome.txt /etc/ax25
+	install -m 755    -o root -g root -d		/usr/local/etc/ax25
+	install -m 644    -o root -g root etc/axmail.conf /usr/local/etc/ax25
+	install -m 644    -o root -g root etc/welcome.txt /usr/local/etc/ax25
 
 installhelp:
-	install -m 755    -o root -g root -d		  /var/ax25/axmail/help
-	install -m 644    -o root -g root etc/help/*.hlp  /var/ax25/axmail/help
+	install -m 755    -o root -g root -d		  /usr/local/var/ax25/axmail/help
+	install -m 644    -o root -g root etc/help/*.hlp  /usr/local/var/ax25/axmail/help
 
 back:
 	rm -f ../mail.tar.gz
@@ -35,7 +35,7 @@ distclean: clean
 	rm -f axmail
 
 axmail: $(MODULES)
-	$(LD) $(LDFLAGS) -o axmail $(MODULES) $(LIBS)
+	$(LD) -o axmail $(MODULES) $(LDFLAGS)
 
 utils.o:	utils.h utils.c mbox.h
 config.o:	config.h config.c defines.h axmail.h utils.h

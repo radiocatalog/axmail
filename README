@@ -23,8 +23,41 @@ package so you're a bit familiar with what it does so that you don't get a
 false perception as to what it can and/or can not do. axMail just might 
 not be what you're looking for or expecting for a node based plugin
 
-HISTORY:
+CHANGE HISTORY:
 
+axmail v2.3 Updated 5 February, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- Added a new "Receipt" request flag in mailcmd.c by request of Mitch AB4MW.
+  This defaults to NO but when flagged to YES, a request will be sent to the
+  remote client's agent. If the agent supports such, they will be prompted
+  whether or not to honor your receipt request. This is history as NO AGENT
+  FOR PACKET TERMINALS SUPPORTS THIS! The function of a generated read 
+  receipt is similar to how HylaFax generates confirmation of transmission
+  receipt mails to your mailbox. Currently mail read in axMail will NOT
+  generate a receipt back. I may work on this later, but for now it doesn't
+  exist.
+* My thoughts of the receipt function is negative. The fact that I may be
+  sending notification that I'm in my email client to a remote destination
+  IMHO is such that a webcam may as well be turned on and watch me do email,
+  and send the stream to "Big Brother" and I don't mean the television show.
+  </rant>
+- Updated defines.h with the new version number.
+- Updated welcome.txt so the new version number is displayed.
+axmail v2.2 Updated 25 December, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- Made some maintenance changes, but forgot to log them in here.
+axmail v2.1.1
+ Updated 30 October, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- Makefile
+  Code provided by Bob Tenty VE3TOK to make it more compatable
+  with newer GCC compiler requirements.
+- utils.c
+  Code provided by Bob Tenty VE3TOK to fix a warning produced when
+  compiling.
+- defines.h
+  Changed version number to reflect the changes incorporated by 
+  Bob Tenty VE3TOK and committed to the subversion repository.
 axmail v2.1
  Updated 31 July, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:
@@ -304,8 +337,5 @@ TODO:
 	Suggestions?
 
 -- 
-Heikki Hannikainen <hessu@pspt.fi> <oh7lzb@zone.oh7rba.ampr.org>
-http://zone.pspt.fi/~oh7lzb/
-
 Brian Rogers <n1uro@n1uro.net> [n1uro@n1uro.#cct.ct.usa.noam]
 ftp://ftp.n1uro.net/packet

@@ -194,6 +194,23 @@ prio:
 		else
 		{ fprintf( f,"X-Priority: 3 (Normal)\n" );
 		}
+
+receipt:
+	getstr(str, LINESIZE, "Read receipt requested? (y/N/?): ");
+
+        if (!strcmp(str, "?")) {
+                printf("\nAnswering \"Y\" or \"yes\" here will request a confirmation of \n");
+                printf("your message being opened by the remote user. By entering \"N\" or \"no\" or\n");
+                printf("by hitting the enter key will not request a confirmation receipt.\n\n");
+                goto receipt;
+        }
+
+        if (!strcasecmp(str, "Y") || !strcasecmp (str, "YES") || !strcasecmp (str, "YE")) {
+                fprintf( f, "Disposition-Notification-To: ""%s"" <%s@%s>\n", fullname, username, hostname);
+                }
+                else
+                { fprintf( f,"" );
+                }
 		
 	if (reply) {
 		if (strncasecmp(dot->subj, "Re: ", 3))

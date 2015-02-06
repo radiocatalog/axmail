@@ -1,4 +1,4 @@
-axMail v1.0.1 - an SMTP mailbox for the various linux node frontends.
+axMail v2.3 - an SMTP mailbox for the various linux node frontends.
 
 Current author: Brian Rogers (N1URO) <n1uro@n1uro.com>
 Past author: Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>
@@ -16,14 +16,14 @@ This is probably one of the simplest packages to install and configure!
 After you run tar zxvf axmail-0.0.8.tgz cd axmail-0.0.8 (which is where 
 you should be now if you're reading this :) ) and run:
 
-make; make install
+make; make install; addgroup ax25
 
 (on newer gcc/libs I do know that there's a warning after it makes but
 it doesn't prevent the binary from compiling and so far it seems to test 
 ok. I'll fix that if and when I get the chance but don't hold your breath 
 on it hi!)
 
-cd /etc/ax25 and using your favorite editor (vi, joe, pico, etc) and
+cd /usr/local/etc/ax25 and using your favorite editor (vi, joe, pico, etc) and
 edit axmail.conf. In here you can specify how you wish the mailbox
 to handle accounting for end users. On *most* linux systems, the default
 should be "ok" but if you wish to have users contact you first, or if
@@ -36,8 +36,8 @@ accounts before saving!) The file is well commented to assist you. When
 you're finished and have become an expert, if you wish to you can delete 
 the comment lines.
 
-You may also customize the file "welcome.txt" in /etc/ax25/ if you wish
-to also. I suggest leaving the first line as-is as this is the so called
+You may also customize the file "welcome.txt" in /usr/local/etc/ax25/ if you 
+wish to also. I suggest leaving the first line as-is as this is the so called
 "new user" welcome greeting email. I've supplied a basic and short 
 greeting email message that users will get once they've created their 
 mailbox. If you would rather new users email your mail account directly 
@@ -47,13 +47,13 @@ For the software itself... believe it or not, you're *DONE*! That's all!
 However... now we need to get it hooked into which ever node frontend you 
 run so that users have a way of accessing it. axMail runs as an external 
 process (ExtCmd) to the node. I've tested it with URONode (obviously) and 
-with LinuxNode by Tomi. To do this cd /etc/ax25 and using your favorite 
-editor open node.conf and add the following line to your ExtCmds:
+with LinuxNode by Tomi. To do this cd /usr/local/etc/ax25 and using your 
+favorite editor open node.conf and add the following line to your ExtCmds:
 
-ExtCmd          MAil    1       root    /usr/sbin/axmail axmail %u
+ExtCmd          MAil    1       root    /usr/local/sbin/axmail axmail %u
 (note: MA in the word MAil is in CAPS)
 
-Save node.conf and telnet in to test! It should work just fine. Since you 
+Save (uro)node.conf and telnet in to test! It should work just fine. Since you 
 would have an existing account on your server, it's unlikely that you'll 
 get the welcome message, but since you can edit it, you'll know what it 
 says :)
