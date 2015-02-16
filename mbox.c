@@ -77,6 +77,7 @@ void makemessage(FILE *f)
 		panic("Message temporary file corrupted");
 	message[messages].m_size = 0;
 	message[messages].m_lines = 0;
+	message[messages].receipt = NULL;
 	message[messages].from = NULL;
 	message[messages].date = NULL;
 	message[messages].subj = NULL;
@@ -238,6 +239,13 @@ rdexit:
 				}
 			}
 			
+                        if ((!strncasecmp(buf, "Disposition-Notification-To:", 28)) && (this.receipt == NULL)) {
+                                cp = &buf[28];
+                                while ((*cp) && (isspace(*cp)))
+                                        cp++;
+                                this.receipt = strdup(cp);
+                        }
+
 			if ((!strncasecmp(buf, "Subject:", 8)) && (this.subj == NULL)) {
 				cp = &buf[8];
 				while ((*cp) && (isspace(*cp)))
@@ -330,6 +338,7 @@ int readmesg(int msg, int verbose)
 			    (!strncasecmp(buf, "Cc:", 3)) ||
 			    (!strncasecmp(buf, "Subject:", 8)))
 				printf("%s", buf);
+
 			if (!strcmp("\n", buf)) {
 				inhdr = 0;
 			}
@@ -340,9 +349,18 @@ int readmesg(int msg, int verbose)
 				return 0;
 			}
 			printf("%s", buf);
+			/* Check for receipt request */
+/*                        if (dot->receipt != NULL) {
+                        printf("\aA receipt was asked for, use SR to send one. ");
+			return 0;  
+                        } */ 
 		}
-	}
-	
-	return 0;
-}
 
+	}
+	return 0;
+		/* Check for receipt request */
+                if (dot->receipt != NULL) {
+                printf("\aA receipt was asked for, use SR to send one.");
+          }
+
+}

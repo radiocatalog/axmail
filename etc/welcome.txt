@@ -1,7 +1,11 @@
-Subject: Welcome to axMail v2.3
+Subject: Welcome to axMail v2.3.1
 
 Welcome to axmail! Your email address
 is listed above the prompt. For further
 assistance, try "?" or email root.
+
+axMail is the first mail client for packet
+that allows it's users the ability to send/receive
+receipts for their mail using just a dumb terminal.
 
 73!

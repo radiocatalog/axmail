@@ -31,6 +31,7 @@ char *tempMail; 		/* Temporary files: ~/mail/ax?(-pid-) */
 char *tempNewMail;		/* Temporary files: ~/mail/axnew?(-pid-) */
 char *tempEdit;
 char *tempMesg;
+char *tempRcpt;
 
 char *hostname		= NULL;
 char *def_shell		= NULL;

@@ -22,6 +22,7 @@ struct message {
 	long	m_offset;		/* offset of message */
 	long	m_size;			/* Bytes in the message */
 	short	m_lines;		/* Lines in the message */
+	char	*receipt;		/* Receipt request */
 	char	*from;			/* From */
 	char	*date;			/* Date string */
 	char	*subj;			/* Subject line */

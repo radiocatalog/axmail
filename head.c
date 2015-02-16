@@ -212,4 +212,3 @@ char *nextword(char *wp, char *wbuf)
 		return NULL;
 	return (wp - 1);
 }
-

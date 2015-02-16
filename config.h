@@ -15,6 +15,7 @@ extern char *mailconf;		/* User's own axmail configuration */
 extern int local;		/* Running with user privileges? */
 
 extern char *tempMail; 		/* Temporary files: ~/mail/ax?(-pid-) */
+extern char *tempRcpt;		/* Temporary files: return receipt */
 extern char *tempNewMail;	/* Temporary files: ~/mail/axnew?(-pid-) */
 extern char *tempEdit;
 extern char *tempMesg;

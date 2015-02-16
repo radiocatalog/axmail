@@ -25,7 +25,19 @@ not be what you're looking for or expecting for a node based plugin
 
 CHANGE HISTORY:
 
-axmail v2.3 Updated 5 February, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+axmail v2.3.1 
+  Updated 5 February, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- added a flag in mailcmd.c where if the request for a receipt exists in a mail
+  message, a bell and a warning sign is generated after the message has been
+  read by the user with instructions to use SR to generate a receipt. This
+  was a difficult routine for me to think of considering the various race
+  conditions that can be expected and met.
+- updated welcome.txt with version upgrade and new feature list.
+- updated README.
+
+axmail v2.3 
+  Updated 5 February, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:
 - Added a new "Receipt" request flag in mailcmd.c by request of Mitch AB4MW.
   This defaults to NO but when flagged to YES, a request will be sent to the
@@ -43,7 +55,9 @@ Changes:
   </rant>
 - Updated defines.h with the new version number.
 - Updated welcome.txt so the new version number is displayed.
-axmail v2.2 Updated 25 December, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+
+axmail v2.2 
+  Updated 25 December, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:
 - Made some maintenance changes, but forgot to log them in here.
 axmail v2.1.1
@@ -58,6 +72,7 @@ Changes:
 - defines.h
   Changed version number to reflect the changes incorporated by 
   Bob Tenty VE3TOK and committed to the subversion repository.
+
 axmail v2.1
  Updated 31 July, 2014 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:
@@ -67,6 +82,7 @@ Changes:
 - global
   axMail is now under review for considerations as standard packaging in
   RedHat's fedora project. It appears it's going to be added as a package.
+
 axmail v2.0
   Updated 8 July, 2013 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:
@@ -97,8 +113,7 @@ Changes:
 
 axmail v1.0.4
   Updated 23 May, 2008 by Brian Rogers (N1URO) <brian@support.uroweb.net>
- 
-Changes:
+ Changes:
 - setpwnam.c
   Changed the way SIGPIPE was handled. Instead of being ignored, it will
   now read a SIGQUIT properly if a QUIT is signaled to axmail either via
@@ -108,7 +123,6 @@ Changes:
 
 axMail v1.0.3
   Updated 2 December, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
-
 Changes:
 - mailcmd.c
   Reset the way I wanted to handle the user input routine for sending faxes.
@@ -125,14 +139,12 @@ Changes:
 
 axMail v1.0.2
   Updated 24 November, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
-
 Changes:
 - mailcmd.c
   Cleaned up some of the code in SFax. Also made some cosmetic changes.
 
 axMail v1.0.1
   Updated 31 October, 2007 by Brian Rogers (N1URO) <brian@support.uroweb.net>
-
 Changes:
 - mailcmd.c
   Added a new routine to allow users to send faxes. This is defined by the
@@ -140,29 +152,23 @@ Changes:
   however since it's a one-way transmission, there is no reply available
   nor is there an option for users to fax to any fax service as some I know
   are pay services.
-
 - config.h
   added definitions for faxgate in axmail.conf
-
 - config.c
   added routine to allow for faxgate as a variable and be called from 
   mailcmd.c
-
 - defines.h
   version upgraded from v1.0.0 (unreleased - test version) to
   v1.0.1
-
 - etc/axmail.conf
   Added new line called "FaxGate" with an example of how to properly
   configure this line.
-
 - etc/help/sfax.hlp
   Added new file "sfax.hlp" which is an online help file for the SFax
   command.
 
 axMail v0.0.9
   Updated 26 September, 2006 by Brian Rogers (N1URO) <n1uro@n1uro.com>
-
 Changes:
 - mailcmd.c
   Added a new routine that prompts the sender whether or not the message
@@ -191,25 +197,21 @@ Changes:
   Version updated from v0.0.8 to v0.0.9
 
 axMail v0.0.8
-
   Updated 2006 by Brian Rogers (N1URO) <n1uro@n1uro.com>
  
 Changes:
  - mailcmd.c
    Rewrote and incorporated code provided by IW3IJQ how axMail inserts
    it's version number in the X-Mailer: string.
-
  - mailcmd.c   
    Added an X-Origin: string to show those peeking at mail headers
    just how the message was possibly sent... by AMATEUR RADIO!
-   
  - axmail.conf
    Added config option in "AllowMail" for axhome, a rewrite of code
    submitted by Stefano IW3IJQ. While I stripped out home directory
    structures similar to that of qmail or axspawn, Stefano convinced
    me that it may be easier to manage home directories for axMail users
    who don't have shell access to branch out within a preset directory.
-
  - defines.h
    Updated version number from 0.0.7 to 0.0.8
 
