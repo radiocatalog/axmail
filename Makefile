@@ -2,12 +2,14 @@ all: axmail
 
 CC = gcc
 LD = gcc
-CFLAGS = -static -Wstrict-prototypes -g -I../lib
-LDFLAGS = -lcrypt
+CFLAGS = -O2 -Wstrict-prototypes -g -I../lib
+LIBS = -lcrypt
 MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o axmail.o quit.o
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
+
+upgrade: installbin installhelp
 
 install: installbin installconf installhelp
 
@@ -35,7 +37,7 @@ distclean: clean
 	rm -f axmail
 
 axmail: $(MODULES)
-	$(LD) -o axmail $(MODULES) $(LDFLAGS)
+	$(LD) -o axmail $(MODULES) $(LIBS) $(LDFLAGS)
 
 utils.o:	utils.h utils.c mbox.h
 config.o:	config.h config.c defines.h axmail.h utils.h

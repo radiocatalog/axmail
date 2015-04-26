@@ -1,4 +1,3 @@
-
 /* command.c - Commands which have nothing to do with mail... */
 
 #include <stdio.h>
@@ -17,24 +16,24 @@
 
 struct cmd Mailcmds[] = {
 	{ "?",		do_help		},
+	{ "Autofwd",	do_forward	},
+	{ "Bye",	do_exit		},
+	{ "Cancel",	do_quit		},
+	{ "Delete",	do_kill		},
+	{ "Exit",	do_exit		},
 	{ "Help",	do_help		},
 	{ "Info",	do_help		},
-	{ "List",	do_list		},
 	{ "Kill",	do_kill		},
-        { "Delete",     do_kill         },
-        { "dele",       do_kill         },
-	{ "Unkill",	do_unkill	},
+	{ "List",	do_list		},
+	{ "Name",	do_name		},
+	{ "Quit",	do_exit		},
 	{ "Read",	do_read		},
-	{ "Verbose",	do_read		},
 	{ "Send",	do_send		},
 	{ "SFax",	do_fax		},
 	{ "SReply",	do_send		},
-	{ "Name",	do_name		},
 	{ "STatus",	do_status	},
-	{ "Exit",	do_exit		},
-	{ "Quit",	do_exit		},
-        { "Bye",        do_exit         },
-        { "CANcel",     do_quit         },
+	{ "Unkill",	do_unkill	},
+	{ "Verbose",	do_read		},
 	{ NULL,		NULL		}
 };
 
@@ -60,6 +59,32 @@ int do_name(int argc, char **argv)
 	printf("You're now known as %s.\n", fullname);
 	
 	return 0;
+}
+
+/* int do_forward(int argc, char **argv) */
+int do_forward(int argc, char **argv)
+{
+	char *email;
+	char *fwdfile;
+	char fwd[79];
+	char forward[79];
+
+	getaddy(fwd);
+	FILE *fptr;
+
+	sprintf(forward, "%s/.forward", homedir);
+	fwdfile = strdup(forward);
+	fptr = fopen(fwdfile, "w+");
+        
+//        if (strlen(fwd) == 0);
+//                printf("Auto Forwarding stopped.\n");
+//        else  { /* Okay, save it */
+                fprintf(fptr, "%s", fwd);
+//        }
+        
+        printf("You're mail will be sent to:\n%s\nThank you.\n", fwd);
+        fclose(fptr); 
+        return 0;
 }
 
 int do_help(int argc, char **argv)

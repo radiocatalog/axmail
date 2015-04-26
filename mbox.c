@@ -349,18 +349,9 @@ int readmesg(int msg, int verbose)
 				return 0;
 			}
 			printf("%s", buf);
-			/* Check for receipt request */
-/*                        if (dot->receipt != NULL) {
-                        printf("\aA receipt was asked for, use SR to send one. ");
-			return 0;  
-                        } */ 
 		}
 
 	}
 	return 0;
-		/* Check for receipt request */
-                if (dot->receipt != NULL) {
-                printf("\aA receipt was asked for, use SR to send one.");
-          }
 
 }

@@ -25,6 +25,24 @@ not be what you're looking for or expecting for a node based plugin
 
 CHANGE HISTORY:
 
+axmail v2.4
+  Updated 25 April, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- cleaned up mbox.c where I had originally placed the receipt checker
+  routine in. This caused loops within the buffer that displayed the
+  message. The true routine lives in mailcmd.c
+- added patch to Makefile provided by Jaroslav at Red Hat for distribution
+  downstream compiles to make packages.
+- changed version in defines.h 
+- major change in command.c, added a new Autofwd command to allow users to
+  auto-forward mail from a remote system to their "home" axMail-FAX base
+  system. Could also be used to forward mail to their internet accounts.
+- added autofwd.hlp file.
+- alphabetized the commandset listing, removed redundantly spelled commands.
+- reworked Makefile and added an "upgrade" option so new files ONLY are
+  deployed after make. Execute using: "make upgrade"
+- updated this file.
+
 axmail v2.3.1 
   Updated 5 February, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 Changes:

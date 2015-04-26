@@ -167,26 +167,6 @@ int do_send(int argc, char **argv)
 		if (reply) {
 			strncpy(str, dot->from, LINESIZE);
 			printf("To: %s\n", str);
-/*			  if (dot->receipt != NULL) {
-				printf("Receipt is needed\n");
-				return 0;
-				}  */
-/* 			  if (str, dot->receipt != NULL) {
-				g = fopen(tempRcpt, "w");
-				fprintf(g, "From: %s <%s@%s>\n", fullname, username, hostname);
-				fprintf(g, "To: %s\n", str);
-				fprintf(g, "Subject: Return Reciept\n");
-				fprintf(g, "\n");
-				fprintf(g, "You requested a receipt when your mail was opened.\n");
-				fprintf(g, "While your message was opened, this is NO guarantee\n");
-				fprintf(g, "that the message was read in full but it does mean\n");
-				fprintf(g, "that the mail you sent was received. Date/time above.\n");
-				fclose(g);
-				sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempRcpt);
-                		system(str);
-				remove(tempRcpt);
-				return 0;
-			}   */
 		} else {
 			getstr(str, LINESIZE, "To: ");
 			if (str[0] == '\0') {
@@ -537,4 +517,3 @@ retry:
 
         return 0;
 }
-

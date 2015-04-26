@@ -1,4 +1,4 @@
-Subject: Welcome to axMail v2.3.1
+Subject: Welcome to axMail v2.4
 
 Welcome to axmail! Your email address
 is listed above the prompt. For further

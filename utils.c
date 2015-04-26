@@ -22,6 +22,14 @@ void prompt(void)
 	printf("%s@%s\nCurrent message %i of %i\n=> ", callsign, hostname, current, messages);
 }
 
+/* Prompt for email forwarding */
+void getaddy(char *forward)
+{	
+	char email[79];
+	getstr(email, 79, "What email address do you want to autoforward mail to? This must be a full\nvalid email address. Example: n1uro@n1uro.com or just hit ENTER to clear.\n");
+	strcpy(forward, email);
+}
+
 /* Prompt for name */
 
 void getname(char *uname)

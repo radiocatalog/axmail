@@ -5,8 +5,10 @@
 extern char callsign[20];
 extern char username[20];
 extern char fullname[31];
+extern char forward[79];
 
 extern char *homedir;		/* User's home directory */
+extern char *fwdfile;		/* User's .forward file (~/.forward) */
 extern char *maildir;		/* User's mail directory (~/mail) */
 extern char *mailbox;		/* System mailbox (/var/spool/mail/user) */
 extern char *userbox;		/* User's mailbox (~/mbox) */
