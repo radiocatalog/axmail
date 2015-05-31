@@ -23,6 +23,7 @@ struct message {
 	long	m_size;			/* Bytes in the message */
 	short	m_lines;		/* Lines in the message */
 	char	*receipt;		/* Receipt request */
+	char	*notify;		/* Delivery notify */
 	char	*from;			/* From */
 	char	*date;			/* Date string */
 	char	*subj;			/* Subject line */

@@ -155,7 +155,7 @@ int do_send(int argc, char **argv)
 	}
 
 	fprintf(f, "From: %s <%s@%s>\n", fullname, username, hostname);
-
+       
 	str[0] = '\0';
 	if (argc != 1)	/* Recipient on command line */
 		for (i = 1; i < argc; i++) {
@@ -266,9 +266,16 @@ retry:
 	}
 	
 	if (strcasecmp(str, "n")) {
-		sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
-		system(str);
-		printf("Message sent.\n");
+		getstr(str, LINESIZE, "Request a delivery receipt? (y/N): ");
+			if (!strcasecmp(str, "y")) {
+			sprintf(str, "%s -N success,delay,failure -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
+			system(str);
+			printf("Message sent, delivery notification activated.\n");
+		} else {
+			sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
+			system(str);
+			printf("Message sent.\n");
+		}
 	} else
 		printf("Message canceled.\n");
 	
