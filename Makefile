@@ -1,5 +1,6 @@
 all: axmail
 
+MAN_DIR = /usr/local/share/man
 CC = gcc
 LD = gcc
 CFLAGS = -O2 -Wstrict-prototypes -g -I../lib
@@ -9,9 +10,9 @@ MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o ax
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-upgrade: installbin installhelp
+upgrade: installbin installhelp installman
 
-install: installbin installconf installhelp
+install: installbin installconf installhelp installman
 
 installbin: all
 	install -m 0755 -s -o root -g root axmail	 /usr/local/sbin
@@ -25,6 +26,9 @@ installhelp:
 	install -m 755    -o root -g root -d		  /usr/local/var/ax25/axmail/help
 	install -m 644    -o root -g root etc/help/*.hlp  /usr/local/var/ax25/axmail/help
 
+installman:
+	install -m 644    -p man/axmail.8	$(MAN_DIR)/man8
+	install -m 644    -p man/axmail.conf.5	$(MAN_DIR)/man5
 back:
 	rm -f ../mail.tar.gz
 	tar cvf ../mail.tar *

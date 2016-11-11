@@ -221,6 +221,7 @@ rdexit:
 			this.m_size = 0;
 			this.m_lines = 0;
 			this.m_offset = offset;
+			this.receipt = NULL;
 			this.subj = NULL;
 			this.from = NULL;
 			this.date = NULL;
@@ -293,6 +294,8 @@ int readmesg(int msg, int verbose)
 	int inhdr = 1;
 	char buf[LINESIZE];
 	
+
+
 	if ((msg < 1) || (msg > messages)) {
 		printf("There's no message %i.\n", msg);
 		return -1;
@@ -336,6 +339,7 @@ int readmesg(int msg, int verbose)
 			    (!strncasecmp(buf, "From:", 5)) ||
 			    (!strncasecmp(buf, "To:", 3)) ||
 			    (!strncasecmp(buf, "Cc:", 3)) ||
+//			    (!strncasecmp(buf, "Disposition-Notification-To:", 3)) ||
 			    (!strncasecmp(buf, "Subject:", 8)))
 				printf("%s", buf);
 

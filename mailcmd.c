@@ -56,7 +56,12 @@ int do_read(int argc, char **argv)
 	int myargc, argsmine;
 	char *tmpbuf;
 	int i;
+	struct message *m;
 	int msg, maxmsg;
+
+//	Automatic Receipt generator
+	FILE *f;
+	char str [LINESIZE + 1];
 
 	if (!(messages)) {
 		printf("You have no messages.\n");
@@ -83,7 +88,7 @@ int do_read(int argc, char **argv)
 
 	for (i = 1; i < myargc; i++) {
 		tmpbuf = strchr(myargv[i], '-');
-		msg = atoi(myargv[i]);
+ 		msg = atoi(myargv[i]);
 		if (tmpbuf == NULL)
 			maxmsg = msg;
 		else
@@ -98,23 +103,36 @@ int do_read(int argc, char **argv)
 				continue;
 			}
 			readmesg(msg, (!strncmp(argv[0], "v", 1)));
-			printf("\n");
+			printf("--- end of message #%i --- \n", msg);
 			if (dot->receipt != NULL) {
-			printf("\aA receipt was asked for. Use the SR command to make one.\n");
+				getstr(str, LINESIZE, "\aA receipt was asked for, do we send one? (y/N): ");
+				if (!strcasecmp(str, "Y") || !strcasecmp (str, "YES") || !strcasecmp (str, "YE")) {
+                                /* Let's try to automate the receipt generator more */
+                                f = fopen(tempMesg, "w");
+                                fprintf(f, "From: %s <%s@%s>\n", fullname, username, hostname);
+                                strncpy (str, dot->from, LINESIZE);
+                                printf("Receipt going to: %s\n", str);
+                                fprintf(f,"To: %s\n", str);
+                                fprintf(f,"X-Mailer: %s\n",VERSION);
+                                fprintf(f,"X-Origin: Amateur Radio Services\n");
+                                fprintf(f,"Subject: axMail-FAX read receipt for \"%s\"\n", dot->subj);
+                                strncpy (str, dot->subj, LINESIZE);
+                                fprintf(f, "Your mail to %s <%s@%s> about \"%s\"\n", fullname, username, hostname, dot->subj);
+				fprintf(f,"written on %s has been read.\n\n", dot->date);
+				fprintf(f, "\n-----\nThis receipt is sent via axMail-FAX: Not your Elmer\'s Wlink!\n");
+                                fclose(f);
+	                        sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
+        	                system(str);
+                	        printf("Read receipt sent.\n");
+                		}
 			}
 		}
+
 	}
-	
 	if (argsmine)
 		for (i = 1; i < myargc; i++)
 			free(myargv[i]);
-
 	return 0;
-	                          if (dot->receipt != NULL) {
-                                printf("Receipt is needed\n");
-                                return 0;
-			}
-
 }
 
 /* Send a message (perhaps a reply) */
@@ -493,12 +511,12 @@ retry:
         getstr(str, LINESIZE, "Deliver (Y/n/c/?): ");
         if (!strcmp(str, "?")) {
                 printf("Answering \"N\" here will cancel the message. Answering \"C\" will\n");
-                printf("let you continue writing the message. Answering anything else will\n");
-                printf("proceed with delivering the message to the recipient.\n");
+                printf("let you continue writing the facsimile. Answering anything else will\n");
+                printf("proceed with delivering the facsimile to the recipient.\n");
                 goto retry;
         }
         if (!strcasecmp(str, "c")) {
-                printf("Continue entering message text\n(end with \"/ex\" or \".\" on a line by itself):\n");
+                printf("Continue entering facsimile text\n(end with \"/ex\" or \".\" on a line by itself):\n");
                 fflush(stdout);
                 goto cont;
         }
@@ -512,9 +530,9 @@ retry:
         if (strcasecmp(str, "n")) {
                 sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
                 system(str);
-                printf("Message sent.\n");
+                printf("Facsimile sent.\n");
         } else
-                printf("Message canceled.\n");
+                printf("Facsimile canceled.\n");
 
         if (remove(tempMesg)) {
                 printf("Ouch, could not remove temporary file.\n");

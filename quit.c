@@ -54,7 +54,7 @@ int save_mbox(void)
 	mblen = ftell(mb);
 	
 	if (mblen < sysboxlen) {
-	    printf("Mailbox changed by another program. Mailbox not saved.");
+	    printf("Mailbox changed by another program. Mailbox not saved.\n");
 	    unlock_fd(fileno(mb));
 	    fclose(mb);
 	    return -1;

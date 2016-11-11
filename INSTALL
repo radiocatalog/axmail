@@ -1,4 +1,5 @@
-axMail v2.2 - an SMTP mailbox for the various linux node frontends.
+axMail - an SMTP mailbox for the various linux node frontends
+         and outbound FAX engine.
 
 Current author: Brian Rogers (N1URO) <n1uro@n1uro.com>
 Past author: Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>
@@ -53,7 +54,7 @@ favorite editor open node.conf and add the following line to your ExtCmds:
 ExtCmd          MAil    1       root    /usr/local/sbin/axmail axmail %u
 (note: MA in the word MAil is in CAPS)
 
-Save node.conf and telnet in to test! It should work just fine. Since you 
+Save uronode.conf and telnet in to test! It should work just fine. Since you 
 would have an existing account on your server, it's unlikely that you'll 
 get the welcome message, but since you can edit it, you'll know what it 
 says :)
