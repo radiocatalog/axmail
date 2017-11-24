@@ -3,13 +3,13 @@
   *	defines.h - Compile-time configuration
   */
 
-#define VERSION "axMail-Fax v2.6"
-#define COPYRIGHT "(c) 1996-1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005-2016 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
+#define VERSION "axMail-Fax v2.8"
+#define COPYRIGHT "(c) 1996-1998 Heikki Hannikainen (OH7LZB) <hessu@hes.iki.fi>\nMailbox save support (c) 2003 Marius Petrescu (YO2LOJ) <mpetrescu@online.ro>\nOther modifications (c) 2005-2017 by Brian Rogers (N1URO) <n1uro@n1uro.net> "
 #define PROMPT "=> "
 
 #define CONF_AXMAIL_FILE "/usr/local/etc/ax25/axmail.conf"
 #define CONF_AXMAIL_PROF_FILE "/usr/local/etc/ax25/ax25.profile"
-#define CONF_AXMAIL_USER_FILE ".axmailrc"
+// #define CONF_AXMAIL_USER_FILE ".axmailrc"
 #define DATA_AXMAIL_HELP_DIR "/usr/local/var/ax25/axmail/help/"
 #define DATA_AXMAIL_MAIL_DIR "/usr/local/var/spool/mail/"
 #define LOCK_AXMAIL_FILE "/var/lock/axmail"
@@ -17,6 +17,7 @@
 
 
 #define FORWARDFILE ".forward"
+#define SIGNATUREFILE ".signature"
 #define USERPROFILE ".profile"
 #define PASSWDFILE "/etc/passwd"
 

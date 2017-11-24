@@ -30,6 +30,15 @@ void getaddy(char *forward)
 	strcpy(forward, email);
 }
 
+/* Prompt for signature */
+void getsig(char *signature)
+{
+        char email[79];
+        getstr(email, 79, "Hit enter to remove or type your signature here:\n");
+        strcpy(signature, email);
+}
+
+
 /* Prompt for name */
 
 void getname(char *uname)

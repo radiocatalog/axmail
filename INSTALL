@@ -59,5 +59,14 @@ would have an existing account on your server, it's unlikely that you'll
 get the welcome message, but since you can edit it, you'll know what it 
 says :)
 
+**ERROR 1**
+*** Note:
+If you're installing axMail-FAX via source, but your MTA (aka: postfix)
+was installed from repository packaging, you may need to create a symlink
+to your users mail file directory... typically: 
+/var/spool/mail/ -> /usr/local/var/spool/mail/
+If you don't do this, users will NOT see their incoming mail.
+***
+
 Happy mailing!
 

@@ -47,6 +47,12 @@ int save_mbox(void)
 	int hasstatus;
 	
 	mb = fopen(mailbox, "r");
+	/* Segfault protection if mailbox file doesn't exist. */
+	if(mb == NULL) {
+		printf("***\nSystem error, I can't see mail files.\nPlease inform your sysop - Error 1.\n***\n");
+                return -1;
+                }
+
 	if (lock_fd(fileno(mb)))
 		return -1;
 
@@ -54,7 +60,7 @@ int save_mbox(void)
 	mblen = ftell(mb);
 	
 	if (mblen < sysboxlen) {
-	    printf("Mailbox changed by another program. Mailbox not saved.\n");
+	    printf("Mailbox changed by another program. Mailbox not saved.");
 	    unlock_fd(fileno(mb));
 	    fclose(mb);
 	    return -1;

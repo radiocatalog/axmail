@@ -24,8 +24,82 @@ false perception as to what it can and/or can not do. axMail just might
 not be what you're looking for or expecting for a node based plugin
 
 CHANGE HISTORY:
+axmail 2.8
+  Updated November, 2017 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- added SPers as a command per the suggestion of VE1JOT. This was done in
+  command.c and was actually quite simple to impliment. The logic behind
+  it is to match the mail send command sets with those of standard PBBS
+  messaging commands.
+* Note: The station who mainly requested this feature via VE1JOT, KB9PVH
+  urged that flags, cc, and bcc options be supressed to make it more user
+  friendly on HF at 300 baud. While I'm really NOT a fanatic about this, I
+  do have compassion for those on HF. Steve gave me a different idea than
+  what I was going to do but I did impliment it into mailcmd.c, mailcmd.h
+  and command.c. If one needs a read receipt or to send cc/bcc copies of
+  their message then S still is an option.
+- added a "spers" .hlp file to the archive.
+- changed defines.h to reflect version 2.8.
+- updated welcome.txt to be more generic rather than be version specific.
+- modified mailcmd.c to now prompt for a "carbon copy" address when sending
+  mail. This allows for a duplicate of the message to be sent to the second
+  person one wishes to copy on the mail.
+- edited this file.
+- while I was at it, I decided to add a "blind carbon copy" feature.
+  This will send a copy of a message to the user specified HOWEVER,
+  they will NOT be listed in the recipient listings. For those using
+  raw terminals, it's possible to NOT enter a 'cc' but still enter a 
+  'bcc' address.
+- edited help files: send.hlp and spersonal.hlp to help guide users
+  on how to best send mail.
+- created a bypass method so that if users did not wish to use cc or bcc
+  mail, they can bypass them instead of being prompted for them - suggested 
+  by VE1JOT.
+- added online help for send/sp|cc|bcc mail.
+- added a new signature file function to the system in both command.c and in
+  mailcmd.c. If no signature file exists, it will instruct the user on this
+  fact and also inform them how to make one using the new SIgnature command.
+  Note: If no ~/.signature file exists mail will still be sent, just without
+  a 1 line siguature (max: 79 characters).
+- bullet proofed both the autoforward and signature file routines in command.c
+  by insuring that a null string not only halts execution of both but also
+  removes both ~/.forward and ~/.signature files respectively.
+- cleaned up the send signature a bit and added my little spam ad even if
+  there is no signature file present. This was done in mailcmd.c.
+- added a string in the signature prompt which informs users how to clear
+  their signature if they desire such. This was done in utils.c
+- Added special critical instructions to INSTALL. I didn't know if I had
+  these in there or not but SP2L informs me I did not. Thanks to Tomasz.
+- Fixed a bug that when the mailbox file(s) weren't found for the system
+  MTA (aka: postfix) axMail would segfault. Now not only does it not
+  segfault but also instructs the user to inform the sysop of this error.
+  This bug existed since version 0.0.1. I've been wanting to do something
+  about this for IONs but didn't get to it until now. This was done in quit.c
+- Fixed a couple of typos in README. I have a very difficult keyboard! 
+- Per the suggestion of G4APL (who gives us many great ideas - and why do
+  I refer to myself in plural? I need a DIET!) I did two things:
+  1 - when listing mail there's no message date stamp within the listing.
+      added in mailcmd.c
+  2 - reordered the mail listing fields where I felt they'd make the most
+      sense. Message subject, then message date, then message size are
+      the last 3 fields listed. They should also be kept in a column
+      justified manner of sorts.
+  3 - added a (St)atus header so the user has a better definition of
+      the status of a specific message.
+
+axmail 2.7
+  Updated 18 May, 2017 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
+- Thanks to Van W1WCG, a bug was spotted in the SR command where if
+  the user entered a parameter such as a message number for example,
+  it wouldn't properly function. This has been fixed. Thanks Van!
+- Forgot to take the "beta" tag out for 2.6. Oops. Fixed.
+- I know in the past I had a 'cc' command for sending mail, and it's
+  been suck in my craw to readd it since.
+
 axmail 2.6
   Updated 22 September, 2016 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
 - changed version number in defines.h
 - fixed error message when a pop client has deleted mail from the
   main mail spool file.
@@ -49,8 +123,10 @@ axmail 2.6
 - So many missing online help files! Again I'm surprised no one brought
   this to my attention. How did we get along with them? "Oh my!" - Sulu
 - Updated this README file.
+
 axmail v2.5.1
   Updated 28 September, 2015 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+Changes:
 - added axmail.8 man page as per spec of Debian downstream.
 - modified Makefile to include axmail.8 manpage installation for both
   new and upgrade options.
@@ -164,7 +240,6 @@ Changes:
   Updated email listings to reflect the most current ones I could find
   including my own. Also added 2013 to the years worked on axMail by
   me.
-
 - quit.c
   Forced ALL mail, read or otherwise when user quits to save to the
   user's system mailbox. This is for reverse compatability with those
@@ -191,11 +266,9 @@ Changes:
   Reset the way I wanted to handle the user input routine for sending faxes.
   Commented out some more unneeded/unused code in the do_fax routine... will
   clean it up in next release or so.
-
 - mailcmd.c
   cleaned up a bug I introduced in the never released 1.0.2 where the
   X-Mailer was duping itself after each line of the body of a message.
-
 - sfax.hlp
   Reworded the SFax help file to help show some examples of how to format
   the header. 
@@ -255,7 +328,6 @@ Changes:
   Added online help text if user is unsure about sending a message
   flagged urgent or normal. This text is available when the user is
   prompted for priority selection by hitting "?" at the prompt.
-
 - defines.h
   Version updated from v0.0.8 to v0.0.9
 
@@ -277,13 +349,11 @@ Changes:
    who don't have shell access to branch out within a preset directory.
  - defines.h
    Updated version number from 0.0.7 to 0.0.8
-
  - axmail.c and config.c
    Rewrote and incorporated code to allow for the routines to use
    what Stefano IW3IJQ originally labled "newuhome" to use "axhome".
    While I was at it, I rewrote and shortened the error text pushed
    to a user who doesn't have permission to use such a directory.
-
  * Note: When I write error texts and menus, I try to write them for
    users on a multi-hop 1200 baud path thus the shorter the better as
    long as context isn't lost and for long distance hops where full
@@ -297,13 +367,11 @@ Changes:
  - cosmetics
    My usual "I like seeing this this way" type cosmetics... too many
    to mention!
-
  - adduser.c
    changed the hard coding of user 'home' directories so that instead
    of them going into a period delimited sort, just dump em all into
    /home/<user> which seems to be "the norm" on most systems I've had
    to assist with.
-
  - adduser.c
    fixed a bug where creating a user was actually causing the program to
    segfault upon exit the first time a user went into the mailbox! The
@@ -314,25 +382,21 @@ Changes:
    This may just be a new bug that appeared with the upgrading of libs,
    this I'm unsure of and since I have no desire to go backwards I have
    decided to actually make a minor routine...
-
  - welcome.txt
    New users are now sent a "welcome" message that the sysop can easily
    customize to their desires. It's located at /etc/ax25/welcome.txt.
    I figured that since axMail was segfaulting because such a file did
    not exist, I might as well make use of this need by having the program
    send the user a greeting.   
-
  - defines.h
    Changed paths to be more in line with the more modern type configs
    as a default. Paths can still be defined by the sysop prior to 
    compiling axMail. 
-
  - Makefile
    I changed the default of make install to include all of the subroutines
    within the Makefile yet leaving such things as "make installbin" 
    available as runtime options if just a binary refresh creation is 
    desired. 
-
  - other
    I'm sure I missed a note or two *shrug*
 
@@ -396,11 +460,8 @@ INSTALLATION:
 	See the file: INSTALL
 
 TODO:
-  I know I can clean up the code a LOT more, will do so for a maintenance
-  release which will most likely be v1.0.2.
-
 	Suggestions?
 
 -- 
 Brian Rogers <n1uro@n1uro.net> [n1uro@n1uro.#cct.ct.usa.noam]
-ftp://ftp.n1uro.net/packet
+ftp://ftp.n1uro.net/pub/hamradio/packet

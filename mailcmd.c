@@ -1,4 +1,3 @@
-
 /* mailcmd.c - Mail commands */
  
 #include <stdio.h>
@@ -25,9 +24,9 @@ void printhead(int i, struct message *m) {
 	if ((m->m_flag & (MDELETED)) == MDELETED)
 		ch = 'K';
 		
-	printf("%c%c%4i %25.25s%6li %.39s\n",
+	printf("%c%c%4i %25.25s %-24.24s %5.16s%6li\n",
 		(current == i+1) ? '>' : ' ',
-		ch, i+1, m->from, m->m_size, m->subj);
+		ch, i+1, m->from, m->subj, m->date ,m->m_size);
 }
 
 int do_list(int argc, char **argv)
@@ -39,7 +38,7 @@ int do_list(int argc, char **argv)
 		return 0;
 	}
 	
-	printf("   Num From                       Size Subject\n");
+	printf("St Num From                      Subject                  Date              Size\n");
 	
 	for (i = 0; i < messages; i++) {
 		printhead(i, &message[i]);
@@ -55,9 +54,10 @@ int do_read(int argc, char **argv)
 	char *myargv[64];
 	int myargc, argsmine;
 	char *tmpbuf;
-	int i;
+	int i, j, k;
 	struct message *m;
 	int msg, maxmsg;
+	char line[2000];
 
 //	Automatic Receipt generator
 	FILE *f;
@@ -141,7 +141,10 @@ int do_send(int argc, char **argv)
 {
 	FILE *f;
 	FILE *g;
+
 	char str[LINESIZE + 1];
+	char cc[LINESIZE + 1];
+	char bcc[LINESIZE + 1];
 	int i;
 
 	int reply = 0;
@@ -155,11 +158,11 @@ int do_send(int argc, char **argv)
 			}
 			i = current;
 		} else
-			i = atoi(argv[1]);
+			i = atoi(argv[0]);
 
 		i--;
 		if ((i < 0) || (i >= messages)) {
-			printf("There's no message %s.\n", argv[1]);
+			printf("Just enter SR without a parameter or number.\n");
 			return 0;
 		}
 
@@ -186,17 +189,72 @@ int do_send(int argc, char **argv)
 			strncpy(str, dot->from, LINESIZE);
 			printf("To: %s\n", str);
 		} else {
-			getstr(str, LINESIZE, "To: ");
+mymain:
+			getstr(str, LINESIZE, "(? = help)\nTo: ");
+			if (!strcmp(str, "?")) {
+				printf("Enter the email address or addresses separated by commas on this line\n");
+				printf("You'll be asked if you want copies to others.\n");
+				printf("Ex: n1uro@n1uro.com, foo@bar.net - all on one line.\n");
+				goto mymain;
+        		} 
+
 			if (str[0] == '\0') {
 				printf("No recipients, message cancelled.\n");
 				fclose(f);
 				remove(tempMesg);
 				return 0;
 			}
+
 		}
 	}
-	
+
 	fprintf( f, "To: %s\n", str);
+	/* adding a carbon copy feature */
+
+copies:
+	getstr(str, LINESIZE, "Send a copy or copies of this mail to others? (y/N/?): ");
+        if (!strcmp(str, "?")) {
+                printf("Answering \"Y\" or \"yes\" here will prompt you to enter cc or bcc mail\n");
+                printf("addreses. Separate them using commas. Ex: n1uro@n1uro.com, foo@bar.net\n");
+                goto copies;
+        } else {
+
+        if (!strcasecmp(str, "Y") || !strcasecmp (str, "YES") || !strcasecmp (str, "YE")) {
+                goto carbon;
+                } else {
+		goto prio;
+		}
+	}
+carbon:
+	getstr(cc, LINESIZE, "(? = help)\ncc: ");
+
+		if (!strcmp(cc, "?")) {
+			printf("Enter your carbon copied address(es) below. You will be prompted for\n");
+			printf("bcc addresses after carbon copied addresses. Enter multiple emails on\n");
+			printf("the same line. Ex: n1uro@n1uro.com, foo@bar.org, me@here.now\n");
+			goto carbon;
+		}
+		if (cc[0] == '\0') {
+			goto goblind;
+		} 
+	fprintf( f, "cc: %s\n", cc);
+
+goblind:
+        /* adding a blind carbon copy feature */
+        getstr(bcc, LINESIZE, "Send a copy to a hidden user? (hit enter if there's no one.)\n(? = help)\nbcc: ");
+
+                if (!strcmp(bcc, "?")) {
+                        printf("Enter your blinded copied address(es) below. These won't show in the mail sent\n");
+                        printf("list. Enter multiple emails the same line. Ex: n1uro@n1uro.com, foo@bar.org\n");
+                        goto goblind;
+                }
+                if (bcc[0] == '\0') {
+                        goto header;
+                }
+        fprintf( f, "bcc: %s\n", bcc);
+
+
+header:
 	fprintf( f, "X-Mailer: %s\n", VERSION );
 	fprintf( f, "X-Origin: Amateur Radio Services\n" );
 	goto prio;;
@@ -276,13 +334,37 @@ retry:
 		fflush(stdout);
 		goto cont;
 	}
+/* append a signature file signature to the mail message */
+        FILE *stream;
+        char *line = NULL;
+        char *sig = NULL;
+	char buffer[79 + 1];
+        size_t len = 0;
+        ssize_t read;
+ 
+	sprintf(buffer,"%s/.signature", homedir);
+        stream = fopen(buffer, "r");
+        if (stream == NULL) {
+                printf("No signature file found, use the SIG command to make one.\n");
+		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
+		goto mailmsg;
+                } else { 
+        while ((read = getline(&line, &len, stream)) != -1) {
+		fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
+        }
+ 
+        free(line);
+        fclose(stream);
+}
+mailmsg:
+
 	
 	if (fclose(f)) {
 		printf("Ouch, could not close temporary file.\n");
 		syslog(LOG_NOTICE, "do_send: Could not close temporary file.\n");
 		return 0;
 	}
-	
+
 	if (strcasecmp(str, "n")) {
 		getstr(str, LINESIZE, "Request a delivery receipt? (y/N): ");
 			if (!strcasecmp(str, "y")) {
@@ -304,6 +386,168 @@ retry:
 	}
 
 	return 0;
+}
+
+/* Send a personal message with no flags or copy prompts */
+
+int do_psend(int argc, char **argv)
+{
+        FILE *f;
+        FILE *g;
+
+        char str[LINESIZE + 1];
+        int i;
+
+        int reply = 0;
+
+        if (!strncmp(argv[0], "sr", 2)) {
+                reply = 1;
+                if (argc == 1) {
+                        if (current == 0) {
+                                printf("No current message to reply to.\n");
+                                return 0;
+                        }
+                        i = current;
+                } else
+                        i = atoi(argv[0]);
+
+                i--;
+                if ((i < 0) || (i >= messages)) {
+                        printf("Just enter SR without a parameter or number.\n");
+                        return 0;
+                }
+
+                dot = &message[i];
+        }
+
+        if ((f = fopen(tempMesg, "w")) == NULL) {
+                printf("Could not create temporary file.\n");
+                syslog(LOG_NOTICE, "do_send: Could not create temporary file.\n");
+                return 0;
+        }
+
+        fprintf(f, "From: %s <%s@%s>\n", fullname, username, hostname);
+
+        str[0] = '\0';
+        if (argc != 1)  /* Recipient on command line */
+                for (i = 1; i < argc; i++) {
+                        if (i > 1)
+                                strcat(str, " ");
+                        strncat(str, argv[i], LINESIZE - strlen(str));
+                }
+        else {
+                if (reply) {
+                        strncpy(str, dot->from, LINESIZE);
+                        printf("To: %s\n", str);
+                } else {
+mypmain:
+                        getstr(str, LINESIZE, "(? = help)\nTo: ");
+                        if (!strcmp(str, "?")) {
+                                printf("Enter the email address or addresses separated by commas on this line\n");
+                                printf("Ex: n1uro@n1uro.com, foo@bar.net - all on one line.\n");
+                                goto mypmain;
+                        }
+
+                        if (str[0] == '\0') {
+                                printf("No recipients, message cancelled.\n");
+                                fclose(f);
+                                remove(tempMesg);
+                                return 0;
+                        }
+
+                }
+        }
+
+        fprintf( f, "To: %s\n", str);
+        fprintf( f, "X-Mailer: %s\n", VERSION );
+        fprintf( f, "X-Origin: Amateur Radio Services\n" );
+	fprintf( f, "X-Priority: 1 (Highest)\n" );
+
+        if (reply) {
+                if (strncasecmp(dot->subj, "Re: ", 3))
+                        snprintf(str, LINESIZE, "Re: %s", dot->subj);
+                else
+                        snprintf(str, LINESIZE, "%s", dot->subj);
+                printf("Subject: %s\n", str);
+        } else
+                getstr(str, LINESIZE, "Subject: ");
+
+        fprintf(f, "Subject: %s\n", str);
+
+        printf("Enter message text (end with \"/ex\" or \".\" on a line by itself):\n");
+        fflush(stdout);
+
+pcont:
+        do {
+                fgets(str, LINESIZE, stdin);
+                if ( strcmp( str, ".\n") && strcmp( str, "/ex\n")) fputs(str, f);
+        } while (strcmp(str, ".\n") && strcmp(str, "/ex\n"));
+
+pretry:
+        getstr(str, LINESIZE, "Deliver (Y/n/c/?): ");
+        if (!strcmp(str, "?")) {
+                printf("Answering \"N\" here will cancel the message. Answering \"C\" will\n");
+                printf("let you continue writing the message. Answering anything else will\n");
+                printf("proceed with delivering the message to the recipient.\n");
+                goto pretry;
+        }
+        if (!strcasecmp(str, "c")) {
+                printf("Continue entering message text\n(end with \"/ex\" or \".\" on a line by itself):\n");
+                fflush(stdout);
+                goto pcont;
+        }
+
+/* append a signature file signature to the mail message */
+        FILE *stream;
+        char *line = NULL;
+        char *sig = NULL;
+	char buffer[79 + 1];
+        size_t len = 0;
+        ssize_t read;
+ 
+        sprintf(buffer,"%s/.signature", homedir);
+	stream = fopen(buffer, "r");
+        if (stream == NULL) {
+                printf("No signature file found, use the SIG command to make one.\n");
+		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
+                goto pmailmsg;
+                } else { 
+        while ((read = getline(&line, &len, stream)) != -1) {
+                fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
+        }
+ 
+	free(line);
+        fclose(stream);
+}
+
+pmailmsg:
+
+        if (fclose(f)) {
+                printf("Ouch, could not close temporary file.\n");
+                syslog(LOG_NOTICE, "do_send: Could not close temporary file.\n");
+                return 0;
+        }
+        if (strcasecmp(str, "n")) {
+                getstr(str, LINESIZE, "Request a delivery receipt? (y/N): ");
+                        if (!strcasecmp(str, "y")) {
+                        sprintf(str, "%s -N success,delay,failure -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
+                        system(str);
+                        printf("Message sent, delivery notification activated.\n");
+                } else {
+                        sprintf(str, "%s -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
+                        system(str);
+                        printf("Message sent.\n");
+                }
+        } else
+                printf("Message canceled.\n");
+
+        if (remove(tempMesg)) {
+                printf("Ouch, could not remove temporary file.\n");
+                syslog(LOG_NOTICE, "do_send: Could not remove temporary file.\n");
+                return 0;
+        }
+
+        return 0;
 }
 
 /* Kill a message */

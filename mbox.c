@@ -293,9 +293,6 @@ int readmesg(int msg, int verbose)
 	int i, line = 0;
 	int inhdr = 1;
 	char buf[LINESIZE];
-	
-
-
 	if ((msg < 1) || (msg > messages)) {
 		printf("There's no message %i.\n", msg);
 		return -1;

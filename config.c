@@ -247,8 +247,8 @@ void tinit(void)
 	sprintf(pat, "%s%s", DATA_AXMAIL_MAIL_DIR, username);
 	mailbox = strdup(pat);
 	
-	sprintf(pat, "%s%s", homedir, CONF_AXMAIL_USER_FILE);
-	mailconf = strdup(pat);
+//	sprintf(pat, "%s%s", homedir, CONF_AXMAIL_USER_FILE);
+//	mailconf = strdup(pat);
 	
 	if (stat(maildir, &fst) < 0) {
 		printf("Creating directory %s...\n", maildir);

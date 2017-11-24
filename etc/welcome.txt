@@ -1,8 +1,11 @@
-Subject: Welcome to axMail v2.5
+Subject: Welcome to axMail-FAX
 
 Welcome to axmail! Your email address
 is listed above the prompt. For further
-assistance, try "?" or email root.
+assistance, try "?" or email root. For help
+on a specific command try: H <fullname>
+where fullname is the full name of the command in
+the menu list (?) you wish help on.
 
 axMail is the first mail client for packet
 that allows it's users the ability to send/receive
