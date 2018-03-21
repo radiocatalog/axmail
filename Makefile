@@ -10,7 +10,7 @@ MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o ax
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-upgrade: installbin installhelp installman
+upgrade: installbin installhelp installman installconf
 
 install: installbin installconf installhelp installman
 
@@ -19,7 +19,7 @@ installbin: all
 
 installconf:
 	install -m 755    -o root -g root -d		/usr/local/etc/ax25
-	install -m 644    -o root -g root etc/axmail.conf /usr/local/etc/ax25
+	install -b -m 644 -o root -g root etc/axmail.conf /usr/local/etc/ax25
 	install -m 644    -o root -g root etc/welcome.txt /usr/local/etc/ax25
 
 installhelp:

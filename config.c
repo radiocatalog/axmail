@@ -23,6 +23,7 @@ char *homedir;			/* User's home directory */
 char *maildir;			/* User's mail directory (~/mail) */
 char *mailbox;			/* System mailbox (/var/spool/mail/user) */
 char *userbox;			/* User's mailbox (~/mbox) */
+char *sysopmail;		/* Sysop's email address */
 char *mailconf;			/* User's own axmail configuration */
 
 int local = 0;			/* Running with user privileges? */
@@ -56,6 +57,7 @@ static int do_first_uid(int, char **);
 static int do_homedir(int, char **);
 static int do_faxgate(int, char **);
 static int do_hostname(int, char **);
+static int do_sysopmail(int, char **);
 static int do_identification(int, char **);
 static int do_idletimeout(int, char **);
 static int do_loginallowed(int, char **);
@@ -75,6 +77,7 @@ static struct cmd cfg_cmds[] = {
 	{ "loginallowed",	do_loginallowed	},
 	{ "last_uid",		do_last_uid	},
 	{ "shell",		do_shell	},
+	{ "sysopmail",		do_sysopmail	},
 	{ NULL,			NULL		}
 };
 
@@ -178,6 +181,14 @@ static int do_hostname(int argc, char **argv)
 	if (argc < 2)
 		return -1;
 	hostname = strdup(argv[1]);
+	return 0;
+}
+
+static int do_sysopmail(int argc, char **argv)
+{
+	if (argc < 2)
+		return -1;
+	sysopmail = strdup(argv[1]);
 	return 0;
 }
 

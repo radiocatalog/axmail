@@ -60,7 +60,7 @@ int save_mbox(void)
 	mblen = ftell(mb);
 	
 	if (mblen < sysboxlen) {
-	    printf("Mailbox changed by another program. Mailbox not saved.");
+	    printf("Mailbox changed by another program.\nMailbox not saved.\n");
 	    unlock_fd(fileno(mb));
 	    fclose(mb);
 	    return -1;
@@ -245,7 +245,7 @@ void quit(int save, int code)
 	}
 	else
 		chk_new_msg();
-	printf("Bye %s! from axMail@%s.\n", username, hostname);	
+	printf("Bye %s!.. from axMail@%s.\n", username, hostname);	
 	cleartmp(tempMail);
 	cleartmp(tempNewMail);
 	cleartmp(tempEdit);

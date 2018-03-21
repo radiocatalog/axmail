@@ -25,6 +25,7 @@ extern char *tempMesg;
 
 extern char *faxgate;		/* Email of your E-Fax Gateway */
 extern char *hostname;
+extern char *sysopmail;
 extern char *def_shell;		/* Default settings for autoaccounts */
 extern char *def_homedir;
 

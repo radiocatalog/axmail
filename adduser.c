@@ -21,6 +21,8 @@
 
 void get_passwd(char *newuser, char *passw)
 {
+	printf("Please email %s with your callsign and desired password.\n", sysopmail);
+
 	char passi[12];
 
 repass: /* Get password */
