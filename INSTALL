@@ -14,10 +14,12 @@ you can. Rerelease it under your own callsign if you wish, or feel free
 to send me your code and I'll import it in.
 
 This is probably one of the simplest packages to install and configure!
-After you run tar zxvf axmail-0.0.8.tgz cd axmail-0.0.8 (which is where 
+After you run tar zxvf axmail-###.tgz cd axmail-#### (which is where 
 you should be now if you're reading this :) ) and run:
 
 make; make install
+Note: If you have clamsmtp and your clamsmtpd.conf is in /usr/local/etc, 
+symlink it to /etc.
 
 (on newer gcc/libs I do know that there's a warning after it makes but
 it doesn't prevent the binary from compiling and so far it seems to test 

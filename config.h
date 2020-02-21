@@ -2,6 +2,8 @@
 #include <utmp.h>
 #include "defines.h"
 
+//#define	CLAMSMTP
+
 extern char callsign[20];
 extern char username[20];
 extern char fullname[31];

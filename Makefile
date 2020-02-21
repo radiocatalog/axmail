@@ -10,7 +10,7 @@ MODULES = utils.o config.o adduser.o command.o mailcmd.o mbox.o head.o lock.o ax
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-upgrade: installbin installhelp installman installconf
+upgrade: installbin installhelp installman
 
 install: installbin installconf installhelp installman
 

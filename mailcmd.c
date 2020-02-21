@@ -336,21 +336,35 @@ retry:
 	}
 /* append a signature file signature to the mail message */
         FILE *stream;
+	FILE *streamm;
         char *line = NULL;
         char *sig = NULL;
 	char buffer[79 + 1];
+	char bufferr[50 + 1];
         size_t len = 0;
         ssize_t read;
- 
+
 	sprintf(buffer,"%s/.signature", homedir);
+	sprintf(bufferr,"/etc/clamsmtpd.conf");
         stream = fopen(buffer, "r");
+	streamm = fopen(bufferr, "r");
         if (stream == NULL) {
                 printf("No signature file found, use the SIG command to make one.\n");
 		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
+	if (streamm  == NULL) {
+		} else {
+		fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fclose(streamm);
+		}
 		goto mailmsg;
                 } else { 
         while ((read = getline(&line, &len, stream)) != -1) {
 		fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
+	        if (streamm  == NULL) {
+		} else {
+                fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fclose(streamm);
+		}
         }
  
         free(line);
@@ -365,8 +379,20 @@ mailmsg:
 		return 0;
 	}
 
+delrcpt:
 	if (strcasecmp(str, "n")) {
-		getstr(str, LINESIZE, "Request a delivery receipt? (y/N): ");
+		getstr(str, LINESIZE, "Request a delivery receipt? (y/N/?): ");
+                        if (!strcasecmp(str, "?")) {
+                        printf("Requesting a delivery receipt sends the remote mail server a command that tells\n");
+                        printf("it that you desire notification that your mail message not only was received but\n");
+                        printf("also that it was actually delivered to the user's mailbox. This comes in very handy\n");
+                        printf("if you need to log the fact that you sent a communication to a specific person\n");
+                        printf("especially for emergency communication purposes and they do NOT send you a read\n");
+                        printf("receipt even though you asked for one, this covers you and is your log of proof that\n");
+                        printf("you infact did send a communication and the remote person did in fact received it.\n");
+                        printf("This feature can ONLY be found in axMail-FAX.\n");
+                        goto delrcpt;
+                        }
 			if (!strcasecmp(str, "y")) {
 			sprintf(str, "%s -N success,delay,failure -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
 			system(str);
@@ -499,21 +525,35 @@ pretry:
 
 /* append a signature file signature to the mail message */
         FILE *stream;
+	FILE *streamm;
         char *line = NULL;
         char *sig = NULL;
 	char buffer[79 + 1];
+	char bufferr[50 + 1];
         size_t len = 0;
         ssize_t read;
  
         sprintf(buffer,"%s/.signature", homedir);
+	sprintf(bufferr,"/etc/clamsmtpd.conf");
 	stream = fopen(buffer, "r");
+	streamm = fopen(bufferr, "r");
         if (stream == NULL) {
                 printf("No signature file found, use the SIG command to make one.\n");
 		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
+	if (streamm == NULL) {
+		} else {
+		fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fclose(streamm);	
+		}
                 goto pmailmsg;
                 } else { 
         while ((read = getline(&line, &len, stream)) != -1) {
                 fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
+	        if (streamm == NULL) {
+		} else {
+                fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fclose(streamm);
+		}
         }
  
 	free(line);
@@ -528,7 +568,19 @@ pmailmsg:
                 return 0;
         }
         if (strcasecmp(str, "n")) {
-                getstr(str, LINESIZE, "Request a delivery receipt? (y/N): ");
+pdelrcpt:
+                getstr(str, LINESIZE, "Request a delivery receipt? (y/N/?): ");
+                        if (!strcasecmp(str, "?")) {
+                        printf("Requesting a delivery receipt sends the remote mail server a command that tells\n");
+                        printf("it that you desire notification that your mail message not only was received but\n");
+                        printf("also that it was actually delivered to the user's mailbox. This comes in very handy\n");
+                        printf("if you need to log the fact that you sent a communication to a specific person\n");
+                        printf("especially for emergency communication purposes and they do NOT send you a read\n");
+                        printf("receipt even though you asked for one, this covers you and is your log of proof that\n");
+                        printf("you infact did send a communication and the remote person did in fact received it.\n");
+                        printf("This feature can ONLY be found in axMail-FAX.\n");
+                        goto pdelrcpt;
+                        }
                         if (!strcasecmp(str, "y")) {
                         sprintf(str, "%s -N success,delay,failure -oem -t < %s", BIN_AXMAIL_SENDMAIL, tempMesg);
                         system(str);

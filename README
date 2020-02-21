@@ -24,6 +24,37 @@ false perception as to what it can and/or can not do. axMail just might
 not be what you're looking for or expecting for a node based plugin
 
 CHANGE HISTORY:
+axMail 2.11.1
+  Updated February 21, 2020 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+- removed the #ifdef CLAMSMTP routine from config.h
+- fixed my routine for checking for /etc/clamsmtpd.conf so that it no longer
+  needs to be previously defined in config.h and auto senses now in mailcmd.c.
+  It dawned on me that the reason it was segfaulting if there was no .conf
+  file that trying to fclose() a file that did not exist was the reason that
+  it was causing axmail to segfault. 
+- made this version 2.11.1 in defines.h.
+- updated INSTALL and README to reflect history and instructions.
+- updated Makefile so make upgrade does not replace config files since
+  it's not required if you're simply upgrading from axmail-2.9 or greater.
+axmail 2.11
+  Updated February 18, 2020 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+- Figured out how to add ClamSMTP to the mail system's MTA. Details
+  are posted on https://uronode.n1uro.com/linux/axclamsmtp.shtml
+  This will scan for viri both IN and OUT bound mails! Very handy!
+- Added a define routine in config.h now. You must #define or #undef
+  CLAMSMTP based on whether or not you're running clamsmtp and have
+  /etc/clamsmtpd.conf in existance. If it's elsewhere on your system
+  create a symlink to it and you'll be fine.
+- added the fact when #defined where mails are tagged with the fact that
+  your mail is being scanned by CLAMSMTP. This was done in mailcmd.c
+- upped the version to 2.11 in defines.h
+- added notes in INSTALL in regards to the new #define in config.h
+axmail 2.10
+  Updated April, 2019 by Brian Rogers (N1URO) <n1uro@n1uro.net>
+- added online help for the "Delivery Receipt" command. This keeps
+  it in line with all the other online helps.
+- modified defines.h with this version number and also increased the
+  year that I'm still working on modifications to the project.
 axmail 2.9
   Updated March, 2018 by Brian Rogers (N1URO) <n1uro@n1uro.net>
 - Removed asking for password upon new user login, instead added a new
