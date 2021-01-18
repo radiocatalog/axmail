@@ -337,34 +337,43 @@ retry:
 /* append a signature file signature to the mail message */
         FILE *stream;
 	FILE *streamm;
+	FILE *streammm;
         char *line = NULL;
         char *sig = NULL;
 	char buffer[79 + 1];
 	char bufferr[50 + 1];
+	char bufferrr[50 + 1];
         size_t len = 0;
         ssize_t read;
 
 	sprintf(buffer,"%s/.signature", homedir);
 	sprintf(bufferr,"/etc/clamsmtpd.conf");
+	sprintf(bufferrr,"/etc/clamav/clamav-milter.conf");
         stream = fopen(buffer, "r");
 	streamm = fopen(bufferr, "r");
+	streammm = fopen(bufferrr, "r");
         if (stream == NULL) {
                 printf("No signature file found, use the SIG command to make one.\n");
 		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
 	if (streamm  == NULL) {
+		} 
+	else if (streammm == NULL) {
 		} else {
-		fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fprintf(f, "\n---\nMail scanned for viri by ClamAV.");
 		fclose(streamm);
+		fclose(streammm);
 		}
+	
 		goto mailmsg;
                 } else { 
         while ((read = getline(&line, &len, stream)) != -1) {
 		fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
 	        if (streamm  == NULL) {
+		} else if (streammm == NULL) {		
 		} else {
-                fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+                fprintf(f, "\n---\nMail scanned for viri by ClamAV.");
 		fclose(streamm);
-		}
+		} 
         }
  
         free(line);
@@ -526,33 +535,42 @@ pretry:
 /* append a signature file signature to the mail message */
         FILE *stream;
 	FILE *streamm;
+	FILE *streammm;
         char *line = NULL;
         char *sig = NULL;
 	char buffer[79 + 1];
 	char bufferr[50 + 1];
+	char bufferrr[50 + 1];
         size_t len = 0;
         ssize_t read;
  
         sprintf(buffer,"%s/.signature", homedir);
 	sprintf(bufferr,"/etc/clamsmtpd.conf");
+	sprintf(bufferrr,"/etc/clamav/clamav-milter.conf");
 	stream = fopen(buffer, "r");
 	streamm = fopen(bufferr, "r");
+	streammm= fopen(bufferrr, "r");
         if (stream == NULL) {
                 printf("No signature file found, use the SIG command to make one.\n");
 		fprintf(f, "\n---\nsent via axMail-FAX by N1URO.");
-	if (streamm == NULL) {
+	} else if (streamm == NULL) {
+		} 
+		else if (streammm == NULL) {
 		} else {
-		fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+		fprintf(f, "\n---\nMail scanned for viri by ClamAV.");
 		fclose(streamm);	
 		}
                 goto pmailmsg;
-                } else { 
+                if (stream) { 
         while ((read = getline(&line, &len, stream)) != -1) {
                 fprintf(f, "\n---\n%s\nsent via axMail-FAX by N1URO.", line);
 	        if (streamm == NULL) {
+		} 
+		if (streammm == NULL) {
 		} else {
-                fprintf(f, "\n---\nMail scanned for viri by ClamSMTP.");
+                fprintf(f, "\n---\nMail scanned for viri by ClamAV.");
 		fclose(streamm);
+		fclose(streammm);
 		}
         }
  

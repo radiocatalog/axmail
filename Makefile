@@ -23,8 +23,8 @@ installconf:
 	install -m 644    -o root -g root etc/welcome.txt /usr/local/etc/ax25
 
 installhelp:
-	install -m 755    -o root -g root -d		  /usr/local/var/ax25/axmail/help
-	install -m 644    -o root -g root etc/help/*.hlp  /usr/local/var/ax25/axmail/help
+	install -m 755    -o root -g root -d		  /usr/local/var/lib/ax25/axmail/help
+	install -m 644    -o root -g root etc/help/*.hlp  /usr/local/var/lib/ax25/axmail/help
 
 installman:
 	install -m 644    -p man/axmail.8	$(MAN_DIR)/man8
