@@ -11,6 +11,7 @@
 #include <pwd.h>
 #include <crypt.h>
 #include <error.h>
+#include <grp.h>
 
 #include "config.h"
 #include "axmail.h"
@@ -21,6 +22,8 @@
 
 /* Parse c-style escapes (neat to have!) */
  
+// int setgroups(void);
+
 static char *parse_string(char *str)
 {
 	char *cp = str;

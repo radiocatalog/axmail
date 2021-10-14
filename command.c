@@ -14,6 +14,9 @@
 #include "utils.h"
 #include "quit.h"
 
+void getsig(char *signature);
+void getaddy(char *forward);
+
 struct cmd Mailcmds[] = {
 	{ "?",		do_help		},
 	{ "Autofwd",	do_forward	},

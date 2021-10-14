@@ -1,4 +1,3 @@
-
 #include <utmp.h>
 #include "defines.h"
 

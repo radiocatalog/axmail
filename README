@@ -24,6 +24,22 @@ false perception as to what it can and/or can not do. axMail just might
 not be what you're looking for or expecting for a node based plugin
 
 CHANGE HISTORY:
+axMail 2.13
+  Updated June 24, 2021
+- Went through the code and fixed multiple compile warnings. Warnings do not
+  affect the program/binary from compiling or funcitioning BUT rather gives
+  the author(s) a warning that possible compile instructions may have changed
+  or are changing.
+
+axMail 2.12.2
+  Updated January 18, 2021
+- Fixed bug in mailcmd.c where sending acted funky on 64 bit systems.
+  axMail would segfault out before properly returning the user back to
+  the mailbox prompt.
+- While at it also fixed some compiler warnings in mailcmd.c
+- edited defines.h to fix old path from /var/ax25 to /var/lib/ax25
+- edited defines.h to reflect this version.
+
 axMail 2.12.1
   Updated January 17, 2021
 - Maintenance release moving /var/ax25/axmail to /var/lib/ax25/axmail
